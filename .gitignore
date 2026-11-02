@@ -35,3 +35,7 @@ agents.md
 AGENTS.md
 .agent/
 *.agent.md
+
+# Local Progress Tracking
+progress.md
+PROGRESS.md
