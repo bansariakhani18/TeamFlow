@@ -1,6 +1,12 @@
 import 'dotenv/config';
 import dns from 'node:dns';
 
+// Force Google Public DNS to reliably resolve MongoDB Atlas SRV records
+try {
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+} catch {
+  // Graceful fallback
+}
 dns.setDefaultResultOrder('ipv4first');
 
 import app from './app.js';

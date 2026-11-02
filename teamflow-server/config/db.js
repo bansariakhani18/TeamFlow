@@ -1,4 +1,13 @@
+import dns from 'node:dns';
 import mongoose from 'mongoose';
+
+// Ensure Google DNS is used for MongoDB Atlas SRV resolution
+try {
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+} catch {
+  // Graceful fallback
+}
+dns.setDefaultResultOrder('ipv4first');
 
 const connectDB = async () => {
   try {
