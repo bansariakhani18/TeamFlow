@@ -7,8 +7,8 @@ export const ProtectedRoute = ({ redirectPath = '/login', children }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F9FAFB] text-slate-500">
-        <Loader2 className="w-8 h-8 animate-spin text-[#0D5C46] mb-3" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F4F3EF] text-stone-500">
+        <Loader2 className="w-8 h-8 animate-spin text-[#4E8765] mb-3" />
         <p className="text-xs font-medium tracking-wide">
           Authenticating workspace session...
         </p>

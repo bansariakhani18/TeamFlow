@@ -12,7 +12,7 @@ export const Spinner = ({ size = 'md', className = '' }) => {
       <Loader2
         className={`${
           sizeClasses[size] || sizeClasses.md
-        } animate-spin text-[#0D5C46]`}
+        } animate-spin text-[#4E8765]`}
       />
     </div>
   );

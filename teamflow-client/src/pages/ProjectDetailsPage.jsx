@@ -215,7 +215,7 @@ export const ProjectDetailsPage = () => {
 
   if (error || !project) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#F9FAFB]">
+      <div className="min-h-screen flex flex-col bg-[#F4F3EF]">
         <Navbar />
         <main className="max-w-4xl mx-auto px-4 py-12 w-full">
           <ErrorMessage
@@ -225,7 +225,7 @@ export const ProjectDetailsPage = () => {
           <div className="mt-4">
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#0D5C46] hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#4E8765] hover:underline"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Workspaces
@@ -239,7 +239,7 @@ export const ProjectDetailsPage = () => {
   const members = project.members || [];
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F9FAFB] text-[#0F172A]">
+    <div className="min-h-screen flex flex-col bg-[#F4F3EF] text-[#1F2937]">
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -247,7 +247,7 @@ export const ProjectDetailsPage = () => {
         <nav className="mb-6">
           <Link
             to="/projects"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-[#0D5C46] transition"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-500 hover:text-[#4E8765] transition"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Back to Workspaces
@@ -255,15 +255,15 @@ export const ProjectDetailsPage = () => {
         </nav>
 
         {/* Workspace Overview Card */}
-        <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-sm mb-8">
+        <section className="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200/80 shadow-sm mb-8">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2.5 mb-3">
                 <span
                   className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium tracking-wide ${
                     isOwner
-                      ? 'bg-slate-100 text-slate-800 border border-slate-200'
-                      : 'bg-[#E6F0EC] text-[#0D5C46] border border-[#0D5C46]/20'
+                      ? 'bg-stone-100 text-stone-800 border border-stone-200'
+                      : 'bg-[#E8F2EC] text-[#2D5A40] border border-[#4E8765]/20'
                   }`}
                 >
                   {isOwner && <ShieldCheck className="w-3 h-3" />}
@@ -271,8 +271,8 @@ export const ProjectDetailsPage = () => {
                 </span>
 
                 {(project.startDate || project.endDate) && (
-                  <span className="inline-flex items-center gap-1 text-xs text-slate-500 bg-slate-50 border border-slate-200/60 px-2.5 py-0.5 rounded-full">
-                    <Calendar className="w-3 h-3 text-slate-400" />
+                  <span className="inline-flex items-center gap-1 text-xs text-stone-500 bg-stone-50 border border-stone-200/60 px-2.5 py-0.5 rounded-full">
+                    <Calendar className="w-3 h-3 text-stone-400" />
                     {project.startDate ? new Date(project.startDate).toLocaleDateString() : 'Start'}
                     {' '}&rarr;{' '}
                     {project.endDate ? new Date(project.endDate).toLocaleDateString() : 'Ongoing'}
@@ -280,11 +280,11 @@ export const ProjectDetailsPage = () => {
                 )}
               </div>
 
-              <h1 className="text-2xl font-bold tracking-tight text-[#0F172A] mb-2">
+              <h1 className="text-2xl font-bold tracking-tight text-[#1F2937] mb-2">
                 {project.name}
               </h1>
 
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-3xl whitespace-pre-line">
+              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed max-w-3xl whitespace-pre-line">
                 {project.description || 'No description provided for this workspace.'}
               </p>
             </div>
@@ -295,15 +295,15 @@ export const ProjectDetailsPage = () => {
                 <>
                   <button
                     onClick={() => setIsEditModalOpen(true)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-medium border border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100 transition shadow-sm"
                   >
-                    <Edit3 className="w-3.5 h-3.5 text-slate-500" />
+                    <Edit3 className="w-3.5 h-3.5 text-stone-500" />
                     Edit
                   </button>
 
                   <button
                     onClick={() => setIsAddMemberModalOpen(true)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium text-white bg-[#0D5C46] hover:bg-[#094232] shadow-sm transition"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-medium text-white bg-[#4E8765] hover:bg-[#3B6B50] shadow-sm transition"
                   >
                     <UserPlus className="w-3.5 h-3.5" />
                     Add Member
@@ -311,7 +311,7 @@ export const ProjectDetailsPage = () => {
 
                   <button
                     onClick={() => setIsDeleteProjectOpen(true)}
-                    className="inline-flex items-center p-1.5 rounded-lg text-[#B91C1C] hover:bg-[#FEF2F2] border border-transparent hover:border-[#FCA5A5]/40 transition"
+                    className="inline-flex items-center p-1.5 rounded-xl text-[#D97767] hover:bg-[#FFE5D9]/50 border border-transparent hover:border-[#D97767]/30 transition"
                     title="Delete Workspace"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -326,7 +326,7 @@ export const ProjectDetailsPage = () => {
                       isSelf: true,
                     })
                   }
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#B91C1C] border border-[#FCA5A5]/60 hover:bg-[#FEF2F2] transition"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-medium text-[#D97767] border border-[#FBC4B8] hover:bg-[#FFE5D9]/50 transition"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   Leave Workspace
@@ -337,17 +337,17 @@ export const ProjectDetailsPage = () => {
         </section>
 
         {/* Members Management Section */}
-        <section className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
-          <div className="flex items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+        <section className="bg-white rounded-2xl p-6 sm:p-8 border border-stone-200/80 shadow-sm">
+          <div className="flex items-center justify-between gap-4 mb-6 pb-4 border-b border-stone-100">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-slate-100 text-[#0F172A] flex items-center justify-center">
-                <Users className="w-4 h-4" />
+              <div className="w-8 h-8 rounded-xl bg-stone-100 text-[#1F2937] flex items-center justify-center">
+                <Users className="w-4 h-4 text-[#4E8765]" />
               </div>
               <div>
-                <h2 className="text-base font-bold text-[#0F172A]">
+                <h2 className="text-base font-bold text-[#1F2937]">
                   Team Members ({members.length})
                 </h2>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-stone-500">
                   Collaborators with assigned roles and workspace access
                 </p>
               </div>
@@ -356,7 +356,7 @@ export const ProjectDetailsPage = () => {
             {isOwner && (
               <button
                 onClick={() => setIsAddMemberModalOpen(true)}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0D5C46] hover:underline"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#4E8765] hover:underline"
               >
                 <UserPlus className="w-3.5 h-3.5" />
                 Add Member
@@ -376,25 +376,25 @@ export const ProjectDetailsPage = () => {
               return (
                 <div
                   key={memberId}
-                  className="flex items-center justify-between p-4 rounded-xl bg-slate-50/70 border border-slate-200/70"
+                  className="flex items-center justify-between p-4 rounded-xl bg-stone-50/70 border border-stone-200/70"
                 >
                   <div className="flex items-center gap-3 overflow-hidden">
-                    <div className="w-9 h-9 rounded-lg bg-[#0F172A] text-white flex items-center justify-center font-bold text-xs shrink-0 uppercase select-none">
+                    <div className="w-9 h-9 rounded-xl bg-[#1F2937] text-white flex items-center justify-center font-bold text-xs shrink-0 uppercase select-none">
                       {memberUser.name ? memberUser.name.charAt(0) : <User className="w-4 h-4" />}
                     </div>
 
                     <div className="truncate">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs sm:text-sm font-semibold text-[#0F172A] truncate">
+                        <span className="text-xs sm:text-sm font-semibold text-[#1F2937] truncate">
                           {memberUser.name || 'Unknown User'}
                         </span>
                         {isCurrentUser && (
-                          <span className="text-[10px] font-semibold text-slate-400">
+                          <span className="text-[10px] font-semibold text-stone-400">
                             (You)
                           </span>
                         )}
                       </div>
-                      <span className="text-[11px] text-slate-500 truncate block">
+                      <span className="text-[11px] text-stone-500 truncate block">
                         {memberUser.email || 'No email provided'}
                       </span>
                     </div>
@@ -402,13 +402,13 @@ export const ProjectDetailsPage = () => {
 
                   <div className="flex items-center gap-1.5 shrink-0 ml-2">
                     {isMemberOwner ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-800 border border-slate-200">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-stone-100 text-stone-800 border border-stone-200">
                         <ShieldCheck className="w-3 h-3" />
                         Owner
                       </span>
                     ) : (
                       <>
-                        <span className="text-[10px] font-medium text-slate-400 bg-white border border-slate-200 px-2 py-0.5 rounded-full">
+                        <span className="text-[10px] font-medium text-stone-500 bg-white border border-stone-200 px-2.5 py-0.5 rounded-full">
                           Member
                         </span>
                         {isOwner && (
@@ -420,7 +420,7 @@ export const ProjectDetailsPage = () => {
                                 isSelf: false,
                               })
                             }
-                            className="p-1 rounded-md text-slate-400 hover:text-[#B91C1C] hover:bg-[#FEF2F2] transition"
+                            className="p-1 rounded-lg text-stone-400 hover:text-[#D97767] hover:bg-[#FFE5D9]/50 transition"
                             title="Remove Member"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -445,7 +445,7 @@ export const ProjectDetailsPage = () => {
             <div>
               <label
                 htmlFor="editName"
-                className="block text-xs font-semibold text-slate-700 mb-1.5"
+                className="block text-xs font-semibold text-stone-700 mb-1.5"
               >
                 Workspace Name *
               </label>
@@ -454,17 +454,17 @@ export const ProjectDetailsPage = () => {
                 type="text"
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-lg text-sm bg-slate-50 border border-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0D5C46] text-slate-900"
+                className="w-full px-3.5 py-2 rounded-xl text-sm bg-white border border-stone-200 focus:outline-none focus:border-[#4E8765] focus:ring-1 focus:ring-[#4E8765] text-stone-900 shadow-sm"
               />
               {editErrors.name && (
-                <p className="mt-1 text-xs text-[#B91C1C] font-medium">{editErrors.name}</p>
+                <p className="mt-1 text-xs text-[#D97767] font-medium">{editErrors.name}</p>
               )}
             </div>
 
             <div>
               <label
                 htmlFor="editDescription"
-                className="block text-xs font-semibold text-slate-700 mb-1.5"
+                className="block text-xs font-semibold text-stone-700 mb-1.5"
               >
                 Description
               </label>
@@ -473,7 +473,7 @@ export const ProjectDetailsPage = () => {
                 rows={3}
                 value={editDescription}
                 onChange={(e) => setEditDescription(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-lg text-sm bg-slate-50 border border-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0D5C46] text-slate-900"
+                className="w-full px-3.5 py-2 rounded-xl text-sm bg-white border border-stone-200 focus:outline-none focus:border-[#4E8765] focus:ring-1 focus:ring-[#4E8765] text-stone-900 shadow-sm"
               />
             </div>
 
@@ -481,7 +481,7 @@ export const ProjectDetailsPage = () => {
               <div>
                 <label
                   htmlFor="editStartDate"
-                  className="block text-xs font-semibold text-slate-700 mb-1.5"
+                  className="block text-xs font-semibold text-stone-700 mb-1.5"
                 >
                   Start Date
                 </label>
@@ -490,14 +490,14 @@ export const ProjectDetailsPage = () => {
                   type="date"
                   value={editStartDate}
                   onChange={(e) => setEditStartDate(e.target.value)}
-                  className="w-full px-3 py-1.5 rounded-lg text-sm bg-slate-50 border border-slate-200 text-slate-900 focus:ring-1 focus:ring-[#0D5C46]"
+                  className="w-full px-3 py-1.5 rounded-xl text-sm bg-white border border-stone-200 text-stone-900 focus:outline-none focus:border-[#4E8765] focus:ring-1 focus:ring-[#4E8765] shadow-sm"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="editEndDate"
-                  className="block text-xs font-semibold text-slate-700 mb-1.5"
+                  className="block text-xs font-semibold text-stone-700 mb-1.5"
                 >
                   Target End Date
                 </label>
@@ -506,27 +506,27 @@ export const ProjectDetailsPage = () => {
                   type="date"
                   value={editEndDate}
                   onChange={(e) => setEditEndDate(e.target.value)}
-                  className="w-full px-3 py-1.5 rounded-lg text-sm bg-slate-50 border border-slate-200 text-slate-900 focus:ring-1 focus:ring-[#0D5C46]"
+                  className="w-full px-3 py-1.5 rounded-xl text-sm bg-white border border-stone-200 text-stone-900 focus:outline-none focus:border-[#4E8765] focus:ring-1 focus:ring-[#4E8765] shadow-sm"
                 />
                 {editErrors.endDate && (
-                  <p className="mt-1 text-xs text-[#B91C1C] font-medium">{editErrors.endDate}</p>
+                  <p className="mt-1 text-xs text-[#D97767] font-medium">{editErrors.endDate}</p>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-stone-100">
               <button
                 type="button"
                 onClick={() => setIsEditModalOpen(false)}
                 disabled={isUpdating}
-                className="px-3.5 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 transition"
+                className="px-3.5 py-2 text-sm font-medium rounded-xl border border-stone-200 text-stone-700 hover:bg-stone-100 transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-white bg-[#0D5C46] hover:bg-[#094232] transition disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl text-white bg-[#4E8765] hover:bg-[#3B6B50] shadow-sm transition disabled:opacity-50"
               >
                 {isUpdating ? (
                   <>
@@ -548,13 +548,13 @@ export const ProjectDetailsPage = () => {
           title="Add Team Member"
         >
           <form onSubmit={handleAddMember} className="space-y-4" noValidate>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-stone-500">
               Enter the registered email of the student collaborator you want to add to this workspace.
             </p>
 
             {addMemberError && (
               <div
-                className="p-3 rounded-lg bg-[#FEF2F2] border border-[#FCA5A5]/60 text-xs text-[#B91C1C] font-medium"
+                className="p-3 rounded-xl bg-[#FFE5D9] border border-[#FBC4B8] text-xs text-[#D97767] font-medium"
                 role="alert"
               >
                 {addMemberError}
@@ -564,12 +564,12 @@ export const ProjectDetailsPage = () => {
             <div>
               <label
                 htmlFor="memberEmail"
-                className="block text-xs font-semibold text-slate-700 mb-1.5"
+                className="block text-xs font-semibold text-stone-700 mb-1.5"
               >
                 Member Email Address *
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
                 <input
                   id="memberEmail"
                   type="email"
@@ -579,24 +579,24 @@ export const ProjectDetailsPage = () => {
                     if (addMemberError) setAddMemberError('');
                   }}
                   placeholder="collaborator@university.edu"
-                  className="w-full pl-9 pr-3.5 py-2 rounded-lg text-sm bg-slate-50 border border-slate-200 focus:outline-none focus:ring-1 focus:ring-[#0D5C46] text-slate-900 transition"
+                  className="w-full pl-9 pr-3.5 py-2 rounded-xl text-sm bg-white border border-stone-200 focus:outline-none focus:border-[#4E8765] focus:ring-1 focus:ring-[#4E8765] text-stone-900 transition shadow-sm"
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-stone-100">
               <button
                 type="button"
                 onClick={() => setIsAddMemberModalOpen(false)}
                 disabled={isAddingMember}
-                className="px-3.5 py-2 text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 transition"
+                className="px-3.5 py-2 text-sm font-medium rounded-xl border border-stone-200 text-stone-700 hover:bg-stone-100 transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isAddingMember}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg text-white bg-[#0D5C46] hover:bg-[#094232] transition disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl text-white bg-[#4E8765] hover:bg-[#3B6B50] shadow-sm transition disabled:opacity-50"
               >
                 {isAddingMember ? (
                   <>

@@ -1,51 +1,83 @@
 # TeamFlow UI/UX Design System Specification (`design.md`)
 
 ## 1. Aesthetic Vision & Core Philosophy
-TeamFlow blends a **Warm Modern Executive Dashboard** aesthetic with **Tactile 3D Micro-interactions**.
-- **Dashboard Tone:** High-clarity, spacious, structured SaaS layout with clean cards, soft borders, subtle shadows, and neutral canvas tones (inspired by modern HR/Project workspaces like Workable).
-- **Auth & Landing Page Tone:** Interactive 3D "Project Binder / Book Flip" physics, giving authentication pages a tactile, high-end feel.
-- **Logo Policy:** STRICT BAN on generic AI/magic/sparkle icons, gradient glowing brains, or floating nodes. Use only crisp, geometric typographic logomarks or minimal monochrome SVG icons.
+TeamFlow merges a **Warm Collaborative Pinboard & Modern SaaS** aesthetic with **Tactile 3D Micro-interactions**.
+- **Global Canvas:** Warm Natural Linen `#F4F3EF` (Tailwind `bg-[#F4F3EF]`)
+- **Primary Brand Color:** Soft Pastel Sage `#4E8765` (Hover: `#3B6B50`, Tint: `#E8F2EC`)
+- **Card Surfaces:** Pure White `#FFFFFF` with `border border-stone-200/80` and `shadow-md`
+- **Text:** Deep Slate `#1F2937` for headings, `#6B7280` for body text.
+- **Accents:**
+  - Pastel Coral: `#FFE5D9` (Background) / `#D97767` (Text)
+  - Butter Yellow: `#FFF3C4` (Background) / `#B48209` (Text)
+  - Sky Blue: `#E0F2FE` (Background) / `#0284C7` (Text)
+  - Muted Lavender: `#F3E8FF` (Background) / `#7E22CE` (Text)
+- **STRICT BANS:** No dark vegetation greens (`#0D5C46`), no audio player timelines, no personal student names ("Bansari"), no course IDs ("IT645"), no generic AI sparkles or single-color flat logos.
 
 ---
 
 ## 2. Design Tokens & Color Palette
 
-### Light Mode (Primary Canvas)
-- **Background Canvas:** `#F9FAFB` (Tailwind `bg-slate-50`) or Soft Warm Cream `#FAF9F6`
-- **Surface / Cards:** `#FFFFFF` with `border border-slate-200/80` and `shadow-sm`
-- **Primary Brand Accent:** Deep Forest Teal `#0D5C46` / Slate Blue `#0F172A`
-- **Primary Hover:** `#094232`
-- **Secondary Accent:** Muted Sage `#E6F0EC` / Soft Slate `#F1F5F9`
-- **Text Primary:** `#0F172A` (Tailwind `text-slate-900`)
-- **Text Muted:** `#64748B` (Tailwind `text-slate-500`)
-- **Border Default:** `#E2E8F0` (Tailwind `border-slate-200`)
+### Base Canvas & Surfaces
+- **Canvas Backdrop:** `#F4F3EF` (Warm Linen)
+- **Surface Panels & Modals:** Pure White `#FFFFFF` with `border border-stone-200/80` and `shadow-sm` or `shadow-md`
+- **Card Radius:** `rounded-2xl` or `rounded-3xl`
 
-### Status Badges & Pill Indicators
-- **Active / Published:** Background `#ECFDF5`, Text `#047857` (Emerald)
-- **Pending / In Progress:** Background `#FEF3C7`, Text `#B45309` (Amber)
-- **Archived / Danger:** Background `#FEF2F2`, Text `#B91C1C` (Rose)
+### Primary Branding (Pastel Sage)
+- **Primary Action Color:** `#4E8765`
+- **Primary Action Hover:** `#3B6B50`
+- **Primary Light Tint:** `#E8F2EC` (Text: `#2D5A40`)
 
----
-
-## 3. Typography & Hierarchy
-- **Font Family:** Inter, System UI, sans-serif (`font-sans`)
-- **Headings:** `font-semibold` / `font-bold` tracking-tight
-- **Body Text:** `text-sm` or `text-base` with generous line height (`leading-relaxed`)
+### Status Tags & Indicators
+- **Active / Complete:** `#E8F2EC` (Background) / `#2D5A40` (Text)
+- **In Progress / Review:** `#FFF3C4` (Background) / `#B48209` (Text)
+- **Notice / High Priority:** `#FFE5D9` (Background) / `#D97767` (Text)
+- **Capacity / Metrics:** `#E0F2FE` (Background) / `#0284C7` (Text)
 
 ---
 
-## 4. Interactive 3D "Book Flip" Auth Experience (Login & Register)
-The authentication container acts as a tactile 3D notebook/binder:
-- **Perspective Container:** `perspective: 1200px` parent wrapper.
-- **Card Flip Transition:** Smooth 3D Y-axis rotation (`transform-style: preserve-3d`, `transition-transform duration-700 ease-in-out`).
-- **Binder Spine Visual:** Decorative left border accent resembling a hardcover binder spine with realistic depth shadow (`shadow-xl`).
-- **Toggle Action:** Switching between "Sign In" and "Create Account" flips the binder cover to reveal the alternate form smoothly.
+## 3. Brand Assets (Logo B 3D Isometric)
+
+```jsx
+export const BrandLogo = ({ className = "h-8 w-8" }) => (
+  <div className="flex items-center gap-3">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      {/* Left Column Plane - Dark Sage Shade */}
+      <path d="M22 38 L44 26 L44 78 L22 90 Z" fill="#3B6B50" />
+      {/* Top Crossbar Plane - Pastel Sage Highlight */}
+      <path d="M22 38 L62 16 L84 28 L44 50 Z" fill="#6B9E80" />
+      {/* Right Interlocking Wing - Medium Sage Accent */}
+      <path d="M44 50 L78 32 L78 52 L44 70 Z" fill="#4E8765" />
+      {/* Front Fold Edge Highlight */}
+      <path d="M44 50 L44 78 L58 70 L58 42 Z" fill="#88B89C" opacity="0.9" />
+    </svg>
+    <span className="font-bold text-xl tracking-tight text-stone-800 font-sans">
+      Team<span className="text-[#4E8765]">Flow</span>
+    </span>
+  </div>
+);
+```
 
 ---
 
-## 5. Dashboard & Workspace Components (Workable Style)
-- **Top Header:** Clean, minimal top bar with search trigger, status indicators, user avatar pill, and semantic navigation.
-- **Sidebar & Cards:** Generous padding (`p-6`), rounded corners (`rounded-2xl` or `rounded-xl`), soft dividers, clean horizontal lists for tasks/projects.
-- **Buttons:**
-  - **Primary:** Solid Deep Forest Teal (`bg-[#0D5C46] text-white hover:bg-[#094232] rounded-lg shadow-sm font-medium transition-all`).
-  - **Secondary / Ghost:** Soft grey outline or subtle tinted fill (`bg-slate-100 text-slate-700 hover:bg-slate-200`).
+## 4. Auth Screen Architecture (Split Hero & 3D Perspective Card)
+
+### Left Column: Cartoon Collaboration Hero Scene
+- High-quality SVG/CSS 3D cartoon collaboration scene featuring teammates around a workspace desk with laptops and documents.
+- 3 Floating Glassmorphic Overlay Widgets:
+  1. **Top Right Pill:** Task Review with Team • 09:30 AM (`bg-[#FFF3C4]/90 text-[#B48209]`)
+  2. **Middle Left Calendar Badge:** Date cards `[Sun 22] [Mon 23] [Tue 24] [Wed 25]` inside translucent pill
+  3. **Bottom Avatar Bubble Stack:** Floating contributor avatars (`BA`, `HM`, `IK`, `HS`) with pastel status indicators (`bg-[#E8F2EC] text-[#2D5A40]`)
+
+### Right Column: 3D Perspective Auth Card
+- Container: `perspective: 1200px`
+- Card: `bg-white border border-stone-200/80 rounded-3xl p-8 shadow-xl relative transition-transform duration-700 transform-gpu`
+- Header: `<BrandLogo />` + Top toggle pill (Sign In vs Register)
+- Inputs: `focus:ring-2 focus:ring-[#4E8765] focus:border-[#4E8765] bg-stone-50/50 rounded-xl`
+- CTA Button: `bg-[#4E8765] hover:bg-[#3B6B50] text-white w-full py-3.5 rounded-xl font-semibold shadow-sm transition-all duration-200` ("Sign In →" / "Create Account →")
+
+---
+
+## 5. UI Component Hierarchy
+- **Buttons:** Pastel Sage (`#4E8765`) primary, Light Stone secondary (`bg-stone-100 hover:bg-stone-200 text-stone-700`)
+- **Modals & Dialogs:** `rounded-3xl bg-white border border-stone-200/80 shadow-2xl`
+- **Dashboard:** Linen background `#F4F3EF`, white rounded-2xl cards with soft borders and hover elevations.

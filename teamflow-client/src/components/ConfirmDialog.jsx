@@ -13,28 +13,28 @@ export const ConfirmDialog = ({
 }) => {
   const variantClasses = {
     danger:
-      'bg-[#B91C1C] hover:bg-[#991B1B] text-white focus:ring-[#B91C1C] shadow-sm',
+      'bg-[#DC2626] hover:bg-[#B91C1C] text-white focus:ring-[#DC2626] shadow-sm',
     primary:
-      'bg-[#0D5C46] hover:bg-[#094232] text-white focus:ring-[#0D5C46] shadow-sm',
+      'bg-[#4E8765] hover:bg-[#3B6B50] text-white focus:ring-[#4E8765] shadow-sm',
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} maxWidth="max-w-md">
       <div className="flex items-start gap-3.5 mb-6">
-        <div className="w-9 h-9 rounded-lg bg-[#FEF2F2] text-[#B91C1C] flex items-center justify-center shrink-0 border border-[#FCA5A5]/40">
+        <div className="w-9 h-9 rounded-xl bg-[#FFE5D9] text-[#DC2626] flex items-center justify-center shrink-0 border border-[#FBC4B8]">
           <AlertTriangle className="w-4 h-4" />
         </div>
-        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-0.5">
+        <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pt-0.5">
           {message}
         </p>
       </div>
 
-      <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-slate-100">
+      <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-stone-100">
         <button
           type="button"
           onClick={onClose}
           disabled={loading}
-          className="px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 transition"
+          className="px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl border border-stone-200 text-stone-700 hover:bg-stone-100 transition"
         >
           Cancel
         </button>
@@ -42,7 +42,7 @@ export const ConfirmDialog = ({
           type="button"
           onClick={onConfirm}
           disabled={loading}
-          className={`px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition focus:outline-none focus:ring-1 focus:ring-offset-1 ${
+          className={`px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl transition focus:outline-none focus:ring-1 focus:ring-offset-1 ${
             variantClasses[confirmVariant] || variantClasses.danger
           } disabled:opacity-50`}
         >

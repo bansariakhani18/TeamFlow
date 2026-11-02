@@ -11,18 +11,20 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #F9FAFB;
-  color: #0F172A;
+  background-color: #F4F3EF;
+  color: #1F2937;
   -webkit-font-smoothing: antialiased;
 }
 
-/* 3D Project Binder Flip Physics */
+/* 3D Perspective & Card Flip */
 .perspective-1200 {
   perspective: 1200px;
+  -webkit-perspective: 1200px;
 }
 
 .preserve-3d {
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 
 .backface-hidden {
@@ -32,30 +34,12 @@ body {
 
 .rotate-y-180 {
   transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
 
-/* Subtle Binder Spine Crease & Shadow */
-.binder-spine {
-  position: relative;
-}
-
-.binder-spine::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 14px;
-  background: linear-gradient(
-    90deg,
-    rgba(15, 23, 42, 0.12) 0%,
-    rgba(15, 23, 42, 0.04) 40%,
-    rgba(255, 255, 255, 0.6) 70%,
-    rgba(15, 23, 42, 0.08) 100%
-  );
-  border-right: 1px solid rgba(15, 23, 42, 0.08);
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-  pointer-events: none;
-  z-index: 10;
+/* Micro Dot Texture on Linen Canvas */
+.linen-canvas {
+  background-color: #F4F3EF;
+  background-image: radial-gradient(rgba(78, 135, 101, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
 }
