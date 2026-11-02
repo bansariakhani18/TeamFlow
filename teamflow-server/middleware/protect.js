@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
+import { ApiError } from '../utils/ApiError.js';
 
 export const protect = async (req, res, next) => {
   let token;
@@ -7,20 +9,28 @@ export const protect = async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
-    try {
-      token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
-      req.user = decoded;
-      return next();
-    } catch (error) {
-      res.status(401);
-      return next(new Error('Not authorized, token failed'));
-    }
+    token = req.headers.authorization.split(' ')[1];
   }
 
   if (!token) {
-    res.status(401);
-    return next(new Error('Not authorized, no token provided'));
+    return next(new ApiError(401, 'Not authorized, no token provided'));
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'teamflow_secret_key');
+    const user = await User.findById(decoded.id).select('-password');
+
+    if (!user) {
+      return next(new ApiError(401, 'Not authorized, user not found'));
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+      return next(error);
+    }
+    return next(new ApiError(401, 'Not authorized, token verification failed'));
   }
 };
 
