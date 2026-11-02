@@ -7,9 +7,11 @@ export const ProtectedRoute = ({ redirectPath = '/login', children }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400">
-        <Loader2 className="w-10 h-10 animate-spin text-indigo-600 mb-3" />
-        <p className="text-sm font-medium animate-pulse">Authenticating TeamFlow session...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F9FAFB] text-slate-500">
+        <Loader2 className="w-8 h-8 animate-spin text-[#0D5C46] mb-3" />
+        <p className="text-xs font-medium tracking-wide">
+          Authenticating workspace session...
+        </p>
       </div>
     );
   }
