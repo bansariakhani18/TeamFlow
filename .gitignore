@@ -27,3 +27,18 @@ Thumbs.db
 # IDE files
 .vscode/
 .idea/
+
+# Local Agent Instructions
+agent.md
+AGENT.md
+agents.md
+AGENTS.md
+.agent/
+*.agent.md
+
+# Local Progress Tracking
+progress.md
+PROGRESS.md
+*PROGRESS.md
+*-PROGRESS.md
+HEER-PROGRESS.md
