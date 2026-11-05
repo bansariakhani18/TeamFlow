@@ -33,3 +33,4 @@ export const useApi = (apiFunc) => {
 };
 
 export default useApi;
+

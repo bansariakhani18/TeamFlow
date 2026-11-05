@@ -22,3 +22,4 @@ export const ErrorMessage = ({ message = 'An error occurred', onRetry, className
 };
 
 export default ErrorMessage;
+

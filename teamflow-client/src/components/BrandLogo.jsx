@@ -17,3 +17,4 @@ export const BrandLogo = ({ className = "h-8 w-8" }) => (
 );
 
 export default BrandLogo;
+

@@ -26,3 +26,4 @@ export const StatusBadge = ({ status = 'todo', className = '' }) => {
 };
 
 export default StatusBadge;
+

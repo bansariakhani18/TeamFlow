@@ -66,3 +66,4 @@ export const KanbanColumn = ({
 };
 
 export default KanbanColumn;
+

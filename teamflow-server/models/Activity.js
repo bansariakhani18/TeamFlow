@@ -52,3 +52,4 @@ activitySchema.index({ task: 1, createdAt: -1 });
 const Activity = mongoose.model('Activity', activitySchema);
 
 export default Activity;
+

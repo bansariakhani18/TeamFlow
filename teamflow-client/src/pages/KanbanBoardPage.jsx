@@ -371,3 +371,4 @@ export const KanbanBoardPage = () => {
 };
 
 export default KanbanBoardPage;
+

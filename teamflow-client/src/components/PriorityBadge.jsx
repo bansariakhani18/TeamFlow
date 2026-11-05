@@ -29,3 +29,4 @@ export const PriorityBadge = ({ priority = 'medium', className = '' }) => {
 };
 
 export default PriorityBadge;
+

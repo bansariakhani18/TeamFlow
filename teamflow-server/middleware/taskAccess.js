@@ -36,3 +36,4 @@ export const loadTaskAndProject = async (req, res, next) => {
 };
 
 export default { loadTaskAndProject };
+
