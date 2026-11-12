@@ -1,5 +1,4 @@
-﻿import Activity from '../models/Activity.js';
-import ActivityLog from '../models/ActivityLog.js';
+import Activity from '../models/Activity.js';
 
 /**
  * Log activity for projects and tasks

@@ -27,10 +27,17 @@ export const createComment = asyncHandler(async (req, res, next) => {
     return next(new ApiError(400, 'Comment text cannot exceed 1000 characters'));
   }
 
-  // Filter valid mention IDs
+  // Filter valid mention IDs and ensure they belong to project members
   let validMentions = [];
   if (Array.isArray(mentions)) {
-    validMentions = mentions.filter((id) => mongoose.Types.ObjectId.isValid(id));
+    const projectMemberIds = new Set([
+      project.owner ? project.owner.toString() : null,
+      ...(project.members || []).map((m) => (m.user ? m.user.toString() : m.toString())),
+    ].filter(Boolean));
+
+    validMentions = mentions
+      .filter((id) => mongoose.Types.ObjectId.isValid(id))
+      .filter((id) => projectMemberIds.has(id.toString()));
   }
 
   const comment = await Comment.create({
@@ -132,7 +139,15 @@ export const updateComment = asyncHandler(async (req, res, next) => {
   comment.editedAt = new Date();
 
   if (Array.isArray(mentions)) {
-    comment.mentions = mentions.filter((id) => mongoose.Types.ObjectId.isValid(id));
+    const project = await Project.findById(comment.project);
+    const projectMemberIds = new Set([
+      project?.owner ? project.owner.toString() : null,
+      ...(project?.members || []).map((m) => (m.user ? m.user.toString() : m.toString())),
+    ].filter(Boolean));
+
+    comment.mentions = mentions
+      .filter((id) => mongoose.Types.ObjectId.isValid(id))
+      .filter((id) => projectMemberIds.has(id.toString()));
   }
 
   await comment.save();
