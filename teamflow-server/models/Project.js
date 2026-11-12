@@ -57,10 +57,10 @@ const projectSchema = new mongoose.Schema(
   }
 );
 
+// Indexes on members.user and owner
 projectSchema.index({ 'members.user': 1 });
 projectSchema.index({ owner: 1 });
 
 const Project = mongoose.model('Project', projectSchema);
 
 export default Project;
-

@@ -17,33 +17,27 @@ export const protect = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'teamflow_secret_key_2026');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'teamflow_secret_key');
     const userId = decoded.id || decoded._id;
-    
     let user = null;
+
     if (userId) {
       try {
         user = await User.findById(userId).select('-password');
       } catch (err) {
-        // Fallback
+        // DB error or test fallback
       }
     }
 
     if (!user) {
-      req.user = {
-        _id: userId || decoded.sub || '000000000000000000000001',
-        id: userId || decoded.sub || '000000000000000000000001',
-        name: decoded.name || 'TeamFlow User',
-        email: decoded.email || 'user@teamflow.local',
-      };
-    } else {
-      req.user = user;
+      return next(new ApiError(401, 'Not authorized, user not found'));
     }
 
+    req.user = user;
     next();
   } catch (error) {
     if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
-      return next(new ApiError(401, 'Not authorized, invalid or expired token'));
+      return next(error);
     }
     return next(new ApiError(401, 'Not authorized, token verification failed'));
   }

@@ -1,62 +1,54 @@
 import express from 'express';
-import { protect } from '../middleware/protect.js';
+import {
+  createProject,
+  getProjects,
+  getProjectById,
+  updateProject,
+  deleteProject,
+  addMember,
+  removeMember,
+} from '../controllers/projectController.js';
 import {
   createTask,
   getProjectTasks,
 } from '../controllers/taskController.js';
-import Project from '../models/Project.js';
-import { sendSuccess } from '../utils/response.js';
-import { ApiError } from '../utils/ApiError.js';
-import { asyncHandler } from '../utils/asyncHandler.js';
+import { protect } from '../middleware/protect.js';
+import { checkProjectMember, checkProjectOwner } from '../middleware/projectAccess.js';
+import { validate } from '../middleware/validate.js';
+import {
+  createProjectSchema,
+  updateProjectSchema,
+  addMemberSchema,
+} from '../utils/validators.js';
 
 const router = express.Router();
 
+// Apply protect middleware to all project routes
 router.use(protect);
 
-// Nested task routes for projects
+router
+  .route('/')
+  .post(validate(createProjectSchema), createProject)
+  .get(getProjects);
+
+router
+  .route('/:projectId')
+  .get(checkProjectMember, getProjectById)
+  .put(checkProjectOwner, validate(updateProjectSchema), updateProject)
+  .delete(checkProjectOwner, deleteProject);
+
+router
+  .route('/:projectId/members')
+  .post(checkProjectOwner, validate(addMemberSchema), addMember);
+
+router
+  .route('/:projectId/members/:userId')
+  .delete(checkProjectMember, removeMember);
+
+// Nested task routes (Module 2)
 router
   .route('/:projectId/tasks')
-  .post(createTask)
-  .get(getProjectTasks);
-
-// Also support /:id/tasks for route param consistency
-router
-  .route('/:id/tasks')
-  .post(createTask)
-  .get(getProjectTasks);
-
-// Basic project endpoints to support UI & testing
-router.get('/', asyncHandler(async (req, res) => {
-  const userId = req.user._id || req.user.id;
-  const projects = await Project.find({
-    $or: [{ owner: userId }, { 'members.user': userId }],
-  }).populate('owner', 'name email').populate('members.user', 'name email');
-  return sendSuccess(res, 200, projects, 'Projects retrieved');
-}));
-
-router.post('/', asyncHandler(async (req, res, next) => {
-  const { name, description } = req.body;
-  if (!name || name.trim().length < 3) {
-    return next(new ApiError(400, 'Project name must be at least 3 characters'));
-  }
-  const userId = req.user._id || req.user.id;
-  const project = await Project.create({
-    name: name.trim(),
-    description: description || '',
-    owner: userId,
-    members: [{ user: userId, joinedAt: new Date() }],
-  });
-  return sendSuccess(res, 201, project, 'Project created');
-}));
-
-router.get('/:projectId', asyncHandler(async (req, res, next) => {
-  const projectId = req.params.projectId;
-  const project = await Project.findById(projectId)
-    .populate('owner', 'name email')
-    .populate('members.user', 'name email');
-  if (!project) return next(new ApiError(404, 'Project not found'));
-  return sendSuccess(res, 200, project, 'Project found');
-}));
+  .post(checkProjectMember, createTask)
+  .get(checkProjectMember, getProjectTasks);
 
 export default router;
-

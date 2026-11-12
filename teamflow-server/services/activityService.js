@@ -28,4 +28,3 @@ export const logActivity = async ({ project, task = null, taskTitle = '', actor,
 };
 
 export default { logActivity };
-

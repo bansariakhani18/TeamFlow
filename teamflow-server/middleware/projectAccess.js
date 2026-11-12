@@ -54,4 +54,3 @@ export const checkProjectOwner = async (req, res, next) => {
 };
 
 export default { checkProjectMember, checkProjectOwner };
-

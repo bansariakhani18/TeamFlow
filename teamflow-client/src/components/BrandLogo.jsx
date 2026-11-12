@@ -1,6 +1,8 @@
+import React from 'react';
+
 export const BrandLogo = ({ className = "h-8 w-8" }) => (
-  <div className="flex items-center gap-2.5">
-    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+  <div className="flex items-center gap-3">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} role="img" aria-label="TeamFlow Logo">
       {/* Left Column Plane - Dark Sage Shade */}
       <path d="M22 38 L44 26 L44 78 L22 90 Z" fill="#3B6B50" />
       {/* Top Crossbar Plane - Pastel Sage Highlight */}
@@ -16,5 +18,5 @@ export const BrandLogo = ({ className = "h-8 w-8" }) => (
   </div>
 );
 
+export const BrandLogoB = BrandLogo;
 export default BrandLogo;
-
