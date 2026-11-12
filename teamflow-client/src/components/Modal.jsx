@@ -30,13 +30,13 @@ export const Modal = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/40 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/40 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
     >
       <div
-        className={`w-full ${maxWidth} bg-white rounded-3xl shadow-xl border border-stone-200/80 overflow-hidden transform transition-all animate-in zoom-in-95 duration-200`}
+        className={`w-full ${maxWidth} bg-white rounded-3xl shadow-xl border border-stone-200/80 overflow-hidden transform transition-all animate-in zoom-in-95 duration-200 my-8`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100">

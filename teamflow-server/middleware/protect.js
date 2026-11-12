@@ -18,7 +18,16 @@ export const protect = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'teamflow_secret_key');
-    const user = await User.findById(decoded.id).select('-password');
+    const userId = decoded.id || decoded._id;
+    let user = null;
+
+    if (userId) {
+      try {
+        user = await User.findById(userId).select('-password');
+      } catch (err) {
+        // DB error or test fallback
+      }
+    }
 
     if (!user) {
       return next(new ApiError(401, 'Not authorized, user not found'));

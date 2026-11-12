@@ -32,3 +32,5 @@ export const sendError = (res, statusCode = 500, message = 'Internal Server Erro
 
   return res.status(statusCode).json(responseBody);
 };
+
+export default { sendSuccess, sendError };

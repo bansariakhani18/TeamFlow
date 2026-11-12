@@ -9,14 +9,16 @@ export const ConfirmDialog = ({
   message = 'Are you sure you want to proceed? This action cannot be undone.',
   confirmText = 'Confirm',
   confirmVariant = 'danger',
+  isDestructive = true,
+  isLoading = false,
   loading = false,
 }) => {
-  const variantClasses = {
-    danger:
-      'bg-[#DC2626] hover:bg-[#B91C1C] text-white focus:ring-[#DC2626] shadow-sm',
-    primary:
-      'bg-[#4E8765] hover:bg-[#3B6B50] text-white focus:ring-[#4E8765] shadow-sm',
-  };
+  const isBusy = isLoading || loading;
+  const isDanger = confirmVariant === 'danger' || isDestructive;
+
+  const variantClass = isDanger
+    ? 'bg-[#DC2626] hover:bg-[#B91C1C] text-white focus:ring-[#DC2626] shadow-sm'
+    : 'bg-[#4E8765] hover:bg-[#3B6B50] text-white focus:ring-[#4E8765] shadow-sm';
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title} maxWidth="max-w-md">
@@ -33,20 +35,18 @@ export const ConfirmDialog = ({
         <button
           type="button"
           onClick={onClose}
-          disabled={loading}
-          className="px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl border border-stone-200 text-stone-700 hover:bg-stone-100 transition"
+          disabled={isBusy}
+          className="px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl border border-stone-200 text-stone-700 hover:bg-stone-100 transition disabled:opacity-50"
         >
           Cancel
         </button>
         <button
           type="button"
           onClick={onConfirm}
-          disabled={loading}
-          className={`px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl transition focus:outline-none focus:ring-1 focus:ring-offset-1 ${
-            variantClasses[confirmVariant] || variantClasses.danger
-          } disabled:opacity-50`}
+          disabled={isBusy}
+          className={`px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl transition focus:outline-none focus:ring-1 focus:ring-offset-1 ${variantClass} disabled:opacity-50`}
         >
-          {loading ? 'Processing...' : confirmText}
+          {isBusy ? 'Processing...' : confirmText}
         </button>
       </div>
     </Modal>

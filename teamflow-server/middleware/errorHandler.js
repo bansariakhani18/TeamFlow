@@ -6,7 +6,7 @@ export const notFound = (req, res, next) => {
 };
 
 export const errorHandler = (err, req, res, next) => {
-  let statusCode = err.statusCode || 500;
+  let statusCode = err.statusCode || (res.statusCode && res.statusCode !== 200 ? res.statusCode : 500);
   let message = err.message || 'Internal Server Error';
   let errors = err.errors || [];
 

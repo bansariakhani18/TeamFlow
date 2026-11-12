@@ -6,6 +6,7 @@ import { notFound, errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
+import taskRoutes from './routes/taskRoutes.js';
 
 const app = express();
 
@@ -18,11 +19,10 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, postman)
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-      return callback(null, true); // Permissive in dev, or origin check
+      return callback(null, true);
     },
     credentials: true,
   })
@@ -47,6 +47,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/tasks', taskRoutes);
 
 // Central error handling
 app.use(notFound);
