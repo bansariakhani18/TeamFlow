@@ -9,16 +9,30 @@ import Activity from '../models/Activity.js';
  * @param {string} params.actor - User ID of actor
  * @param {string} params.action - Activity action enum
  * @param {Object} [params.details] - Details payload
+ * @param {string} [params.target] - Target entity label or description
  */
-export const logActivity = async ({ project, task = null, taskTitle = '', actor, action, details = {} }) => {
+export const logActivity = async ({
+  project,
+  task = null,
+  taskTitle = '',
+  actor,
+  action,
+  details = {},
+  target = '',
+}) => {
   try {
+    const finalTaskTitle = taskTitle || target || '';
+    const finalTarget = target || taskTitle || '';
+
     const activity = await Activity.create({
       project,
       task,
-      taskTitle,
+      taskTitle: finalTaskTitle,
       actor,
       action,
       details,
+      target: finalTarget,
+      timestamp: new Date(),
     });
     return activity;
   } catch (error) {

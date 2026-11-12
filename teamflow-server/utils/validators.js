@@ -1,4 +1,4 @@
-import { z } from 'zod';
+﻿import { z } from 'zod';
 
 export const registerSchema = z.object({
   name: z
@@ -89,4 +89,22 @@ export const addMemberSchema = z.object({
     .trim()
     .email('Please provide a valid email address')
     .toLowerCase(),
+});
+
+export const createCommentSchema = z.object({
+  text: z
+    .string({ required_error: 'Comment text is required' })
+    .trim()
+    .min(1, 'Comment text must be between 1 and 1000 characters')
+    .max(1000, 'Comment text cannot exceed 1000 characters'),
+  mentions: z.array(z.string()).optional(),
+});
+
+export const updateCommentSchema = z.object({
+  text: z
+    .string({ required_error: 'Comment text is required' })
+    .trim()
+    .min(1, 'Comment text must be between 1 and 1000 characters')
+    .max(1000, 'Comment text cannot exceed 1000 characters'),
+  mentions: z.array(z.string()).optional(),
 });

@@ -1,4 +1,4 @@
-import express from 'express';
+﻿import express from 'express';
 import {
   createProject,
   getProjects,
@@ -12,6 +12,9 @@ import {
   createTask,
   getProjectTasks,
 } from '../controllers/taskController.js';
+import {
+  getProjectActivity,
+} from '../controllers/activityController.js';
 import { protect } from '../middleware/protect.js';
 import { checkProjectMember, checkProjectOwner } from '../middleware/projectAccess.js';
 import { validate } from '../middleware/validate.js';
@@ -50,5 +53,10 @@ router
   .route('/:projectId/tasks')
   .post(checkProjectMember, createTask)
   .get(checkProjectMember, getProjectTasks);
+
+// Nested project activity route (Module 3)
+router
+  .route('/:projectId/activity')
+  .get(checkProjectMember, getProjectActivity);
 
 export default router;

@@ -1,7 +1,8 @@
-import mongoose from 'mongoose';
+﻿import mongoose from 'mongoose';
 import Task, { TASK_STATUSES, TASK_PRIORITIES } from '../models/Task.js';
 import Project from '../models/Project.js';
 import User from '../models/User.js';
+import Comment from '../models/Comment.js';
 import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { sendSuccess } from '../utils/response.js';
@@ -542,6 +543,7 @@ export const deleteTask = asyncHandler(async (req, res, next) => {
 
   const taskTitle = task.title;
   await Task.findByIdAndDelete(taskId);
+  await Comment.deleteMany({ task: taskId });
 
   await logActivity({
     project: project._id,
