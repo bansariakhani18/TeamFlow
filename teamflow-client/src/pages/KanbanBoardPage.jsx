@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+﻿import { useState, useEffect, useCallback } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axiosClient from '../api/axiosClient';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
@@ -7,6 +7,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import KanbanColumn from '../components/kanban/KanbanColumn';
 import CreateTaskModal from '../components/kanban/CreateTaskModal';
 import TaskDetailModal from '../components/kanban/TaskDetailModal';
+import TaskDetailDrawer from '../components/TaskDetailDrawer';
 import { useAuth } from '../context/AuthContext';
 
 const KANBAN_COLUMNS = [
@@ -310,7 +311,7 @@ export const KanbanBoardPage = () => {
                   : 'bg-stone-50 text-stone-600 border-stone-200 hover:bg-stone-100'
               }`}
             >
-              {overdueOnly ? '🔥 Overdue Only' : 'Overdue'}
+              {overdueOnly ? 'ðŸ”¥ Overdue Only' : 'Overdue'}
             </button>
           </div>
         </div>
@@ -353,7 +354,7 @@ export const KanbanBoardPage = () => {
         isLoading={isSubmitting}
       />
 
-      <TaskDetailModal
+      <TaskDetailDrawer
         isOpen={isDetailOpen}
         onClose={() => {
           setIsDetailOpen(false);
@@ -364,7 +365,6 @@ export const KanbanBoardPage = () => {
         onUpdate={handleUpdateTask}
         onStatusChange={handleMoveStatus}
         onDelete={handleDeleteTask}
-        isLoading={isSubmitting}
       />
     </div>
   );

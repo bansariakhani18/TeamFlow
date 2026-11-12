@@ -1,0 +1,361 @@
+{
+  "info": {
+    "name": "TeamFlow - Module 3: Collaboration & Activity",
+    "_postman_id": "c92f1b4a-m3-collab-activity-v1",
+    "description": "Postman test suite for TeamFlow Module 3 (Ishpreet Kaur - 202512104). Tests task comments, author edits, deletions, user mentions, immutable activity history, project feeds, and access control.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Add Comment (201 Created - TC-COL-01)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Great progress on this feature! Tagging @teammate for code review.\",\n  \"mentions\": []\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/tasks/{{taskId}}/comments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "tasks", "{{taskId}}", "comments"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 201 Created', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "pm.test('Response contains valid comment object and author', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data).to.have.property('_id');",
+              "    pm.expect(jsonData.data.text).to.include('Great progress on this feature');",
+              "    pm.expect(jsonData.data.author).to.be.an('object');",
+              "    pm.environment.set('commentId', jsonData.data._id);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Add Comment - Empty Text (400 Bad Request - TC-COL-02)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"   \"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/tasks/{{taskId}}/comments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "tasks", "{{taskId}}", "comments"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 400 Bad Request', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "pm.test('Response indicates validation error', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Add Comment - Non Member (403 Forbidden - TC-COL-03)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{nonMemberToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Unauthorized comment attempt\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/tasks/{{taskId}}/comments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "tasks", "{{taskId}}", "comments"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 403 Forbidden', function () {",
+              "    pm.response.to.have.status(403);",
+              "});",
+              "pm.test('Access denied message returned', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. List Task Comments (200 OK - TC-COL-02)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/tasks/{{taskId}}/comments?order=asc&page=1&limit=20",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "tasks", "{{taskId}}", "comments"],
+          "query": [
+            { "key": "order", "value": "asc" },
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "20" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Returns list of comments and pagination', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data).to.be.an('array');",
+              "    pm.expect(jsonData).to.have.property('pagination');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Edit Own Comment (200 OK - TC-COL-04)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Updated discussion comment with revised instructions.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/comments/{{commentId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "comments", "{{commentId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Comment is marked with editedAt timestamp', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data.text).to.include('Updated discussion comment');",
+              "    pm.expect(jsonData.data).to.have.property('editedAt');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Edit Other User Comment (403 Forbidden - TC-COL-04)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{memberBToken}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Attempting to edit another teammate's comment\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/comments/{{commentId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "comments", "{{commentId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 403 Forbidden', function () {",
+              "    pm.response.to.have.status(403);",
+              "});",
+              "pm.test('Denies unauthorized comment modification', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(false);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Get Task Activity Log (200 OK - TC-COL-06)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/tasks/{{taskId}}/activity",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "tasks", "{{taskId}}", "activity"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Returns task events timeline', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data).to.be.an('array');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Get Project Activity Timeline (200 OK - FR-3.2)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/projects/{{projectId}}/activity?page=1&limit=20",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "projects", "{{projectId}}", "activity"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "20" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Returns project event stream and pagination', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data).to.be.an('array');",
+              "    pm.expect(jsonData).to.have.property('pagination');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Immutability Check - Cannot Modify Activity (404 Not Found - TC-COL-07)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/projects/{{projectId}}/activity",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "projects", "{{projectId}}", "activity"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 404 Not Found for activity mutation', function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Delete Comment (200 OK - TC-COL-05)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/comments/{{commentId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "comments", "{{commentId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Confirms comment deletion', function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

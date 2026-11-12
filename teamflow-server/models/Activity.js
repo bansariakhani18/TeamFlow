@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+﻿import mongoose from 'mongoose';
 
 const activitySchema = new mongoose.Schema(
   {
@@ -36,19 +36,29 @@ const activitySchema = new mongoose.Schema(
         'MEMBER_REMOVED',
       ],
     },
+    target: {
+      type: String,
+      default: '',
+    },
     details: {
       type: mongoose.Schema.Types.Mixed,
       default: {},
     },
+    timestamp: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
 activitySchema.index({ project: 1, createdAt: -1 });
 activitySchema.index({ task: 1, createdAt: -1 });
 
-const Activity = mongoose.model('Activity', activitySchema);
+const Activity = mongoose.models.Activity || mongoose.model('Activity', activitySchema);
 
 export default Activity;

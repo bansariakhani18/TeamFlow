@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailsPage from './pages/ProjectDetailsPage';
 import KanbanBoardPage from './pages/KanbanBoardPage';
+import ActivityFeedPage from './pages/ActivityFeedPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export function App() {
@@ -26,6 +27,7 @@ export function App() {
               <Route path="/projects/:projectId" element={<ProjectDetailsPage />} />
               <Route path="/projects/:projectId/board" element={<KanbanBoardPage />} />
               <Route path="/projects/:projectId/tasks" element={<KanbanBoardPage />} />
+              <Route path="/projects/:projectId/activity" element={<ActivityFeedPage />} />
               <Route path="/board" element={<KanbanBoardPage />} />
             </Route>
 

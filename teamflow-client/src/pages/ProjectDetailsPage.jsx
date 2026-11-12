@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axiosClient from '../api/axiosClient';
 import { useAuth } from '../context/AuthContext';
@@ -8,6 +8,7 @@ import Modal from '../components/Modal';
 import ConfirmDialog from '../components/ConfirmDialog';
 import Spinner from '../components/Spinner';
 import ErrorMessage from '../components/ErrorMessage';
+import ActivityFeed from '../components/ActivityFeed';
 import {
   ArrowLeft,
   Calendar,
@@ -434,6 +435,11 @@ export const ProjectDetailsPage = () => {
             })}
           </div>
         </section>
+
+        {/* Real-Time Team Activity Timeline (Module 3) */}
+        <div className="mt-8">
+          <ActivityFeed projectId={projectId} />
+        </div>
 
         {/* Edit Workspace Modal */}
         <Modal
