@@ -1,3 +1,4 @@
+import React from 'react';
 import { FolderGit2 } from 'lucide-react';
 
 export const EmptyState = ({
@@ -15,7 +16,9 @@ export const EmptyState = ({
     >
       <div className="w-12 h-12 rounded-2xl bg-stone-100 flex items-center justify-center text-[#4E8765] mb-3 border border-stone-200/80">
         {icon ? (
-          typeof icon === 'function' ? (
+          React.isValidElement(icon) ? (
+            icon
+          ) : typeof icon === 'function' || typeof icon === 'object' ? (
             React.createElement(icon, { className: 'w-6 h-6' })
           ) : (
             icon
