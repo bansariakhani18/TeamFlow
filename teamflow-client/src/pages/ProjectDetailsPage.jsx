@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axiosClient from '../api/axiosClient';
 import { useAuth } from '../context/AuthContext';
@@ -21,6 +21,8 @@ import {
   Mail,
   User,
   Loader2,
+  BarChart3,
+  Kanban,
 } from 'lucide-react';
 
 export const ProjectDetailsPage = () => {
@@ -292,6 +294,22 @@ export const ProjectDetailsPage = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-2">
+              <Link
+                to={`/projects/${projectId}/board`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border border-stone-200 bg-white text-stone-700 hover:bg-stone-50 transition shadow-xs"
+              >
+                <Kanban className="w-3.5 h-3.5 text-[#4E8765]" />
+                Kanban
+              </Link>
+
+              <Link
+                to={`/projects/${projectId}/dashboard`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#E8F2EC] text-[#2D5A40] border border-[#4E8765]/20 hover:bg-[#d8e9de] transition shadow-xs"
+              >
+                <BarChart3 className="w-3.5 h-3.5 text-[#4E8765]" />
+                Analytics
+              </Link>
+
               {isOwner ? (
                 <>
                   <button

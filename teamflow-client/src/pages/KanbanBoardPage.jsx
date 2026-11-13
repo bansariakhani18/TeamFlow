@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axiosClient from '../api/axiosClient';
 import Navbar from '../components/Navbar';
@@ -9,6 +9,7 @@ import CreateTaskModal from '../components/kanban/CreateTaskModal';
 import TaskDetailModal from '../components/kanban/TaskDetailModal';
 import TaskDetailDrawer from '../components/TaskDetailDrawer';
 import { useAuth } from '../context/AuthContext';
+import { BarChart3 } from 'lucide-react';
 
 const KANBAN_COLUMNS = [
   { id: 'todo', title: 'To Do', color: 'bg-stone-400', transitions: ['in_progress'] },
@@ -224,6 +225,15 @@ export const KanbanBoardPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
             </button>
+
+            <Link
+              to={project?._id || projectId ? `/projects/${project?._id || projectId}/dashboard` : '/dashboard'}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-stone-700 bg-white hover:bg-stone-50 border border-stone-200 rounded-xl transition shadow-xs"
+              title="View Project Analytics"
+            >
+              <BarChart3 className="w-4 h-4 text-[#4E8765]" />
+              <span className="hidden sm:inline">Analytics</span>
+            </Link>
 
             <button
               onClick={() => handleOpenCreate('todo')}

@@ -92,13 +92,12 @@ const taskSchema = new mongoose.Schema(
 );
 
 // Sync assignedTo and assignee bidirectionally before saving
-taskSchema.pre('save', function (next) {
+taskSchema.pre('save', function () {
   if (this.assignedTo && !this.assignee) {
     this.assignee = this.assignedTo;
   } else if (this.assignee && !this.assignedTo) {
     this.assignedTo = this.assignee;
   }
-  if (next) next();
 });
 
 // Indexes for high performance querying

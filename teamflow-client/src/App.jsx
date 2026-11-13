@@ -8,6 +8,7 @@ import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailsPage from './pages/ProjectDetailsPage';
 import KanbanBoardPage from './pages/KanbanBoardPage';
 import ActivityFeedPage from './pages/ActivityFeedPage';
+import AnalyticsDashboardPage from './pages/AnalyticsDashboardPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export function App() {
@@ -28,6 +29,10 @@ export function App() {
               <Route path="/projects/:projectId/board" element={<KanbanBoardPage />} />
               <Route path="/projects/:projectId/tasks" element={<KanbanBoardPage />} />
               <Route path="/projects/:projectId/activity" element={<ActivityFeedPage />} />
+              <Route path="/projects/:projectId/dashboard" element={<AnalyticsDashboardPage />} />
+              <Route path="/projects/:projectId/analytics" element={<AnalyticsDashboardPage />} />
+              <Route path="/dashboard" element={<AnalyticsDashboardPage />} />
+              <Route path="/analytics" element={<AnalyticsDashboardPage />} />
               <Route path="/board" element={<KanbanBoardPage />} />
             </Route>
 

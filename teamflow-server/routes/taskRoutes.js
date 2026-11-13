@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import { protect } from '../middleware/protect.js';
 import { loadTaskAndProject } from '../middleware/taskAccess.js';
 import { validate } from '../middleware/validate.js';
@@ -17,6 +17,9 @@ import {
 import {
   getTaskActivity,
 } from '../controllers/activityController.js';
+import {
+  sendTaskReminder,
+} from '../controllers/analyticsController.js';
 
 const router = express.Router();
 
@@ -43,5 +46,7 @@ router
 
 router.patch('/:id/status', updateTaskStatus);
 router.patch('/:id/assignee', updateTaskAssignee);
+router.post('/:id/remind', sendTaskReminder);
+router.post('/:taskId/remind', sendTaskReminder);
 
 export default router;

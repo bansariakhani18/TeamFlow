@@ -1,4 +1,4 @@
-﻿import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import Task, { TASK_STATUSES, TASK_PRIORITIES } from '../models/Task.js';
 import Project from '../models/Project.js';
 import User from '../models/User.js';
@@ -7,6 +7,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { sendSuccess } from '../utils/response.js';
 import { logActivity } from '../services/activityService.js';
+import { sendTaskAssignedEmail } from '../services/emailService.js';
 
 // Status transition matrix
 const ALLOWED_TRANSITIONS = {
@@ -121,7 +122,7 @@ export const createTask = asyncHandler(async (req, res, next) => {
       action: 'TASK_ASSIGNED',
       details: { assignedTo: targetAssignee },
     });
-    // TODO(M4): sendTaskAssignedEmail(task, targetAssignee, req.user)
+    await sendTaskAssignedEmail(task, targetAssignee, req.user);
   }
 
   const populatedTask = await Task.findById(task._id)
@@ -348,7 +349,7 @@ export const updateTask = asyncHandler(async (req, res, next) => {
         action: 'TASK_ASSIGNED',
         details: { from: prevAssignee, to: newAssignee },
       });
-      // TODO(M4): sendTaskAssignedEmail(task, newAssignee, req.user)
+      await sendTaskAssignedEmail(task, newAssignee, req.user);
     }
   }
 
@@ -501,7 +502,7 @@ export const updateTaskAssignee = asyncHandler(async (req, res, next) => {
     details: { from: prevAssignee, to: newAssigneeId },
   });
 
-  // TODO(M4): sendTaskAssignedEmail(task, newAssigneeId, req.user)
+  await sendTaskAssignedEmail(task, newAssigneeId, req.user);
 
   const updatedTask = await Task.findById(task._id)
     .populate('assignedTo', 'name email')

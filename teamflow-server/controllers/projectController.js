@@ -1,9 +1,10 @@
-﻿import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import Project from '../models/Project.js';
 import User from '../models/User.js';
 import Task from '../models/Task.js';
 import Comment from '../models/Comment.js';
 import Activity from '../models/Activity.js';
+import Notification from '../models/Notification.js';
 import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { sendSuccess } from '../utils/response.js';
@@ -130,6 +131,7 @@ export const deleteProject = asyncHandler(async (req, res) => {
   await Task.deleteMany({ project: project._id });
   await Comment.deleteMany({ project: project._id });
   await Activity.deleteMany({ project: project._id });
+  await Notification.deleteMany({ project: project._id });
 
   return sendSuccess(res, 200, { deletedId: project._id }, 'Project deleted successfully');
 });

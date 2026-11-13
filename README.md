@@ -139,6 +139,17 @@ All API endpoints are prefixed with `/api`. Protected routes require a valid hea
 | :--- | :--- | :--- | :--- |
 | `GET` | `/api/users?search=<query>` | Protected | Search registered users by name or email for invitations |
 
+### Analytics & Dashboard Endpoints (Module 4)
+| Method | Endpoint | Access | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/projects/:projectId/analytics` | Member | Task completion %, workload distribution, overdue count, velocity |
+| `GET` | `/api/projects/:projectId/export/csv` | Member | Export & download project tasks summary CSV report |
+| `GET` | `/api/projects/:projectId/dashboard/workload` | Member | MongoDB aggregation of task distribution per member |
+| `GET` | `/api/projects/:projectId/dashboard/overdue` | Member | Overdue task list with calculated days overdue |
+| `POST` | `/api/tasks/:taskId/remind` | Owner | Dispatch manual reminder email via Resend API |
+| `GET` | `/api/projects/:projectId/notifications` | Owner | Notification audit log of dispatched emails |
+| `GET` | `/api/dashboard/me` | Protected | Personal cross-project dashboard summary |
+
 ### Health Check Endpoint
 | Method | Endpoint | Access | Description |
 | :--- | :--- | :--- | :--- |
