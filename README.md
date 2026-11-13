@@ -21,7 +21,7 @@ Developed as part of **IT645 — Web and Mobile Development (MERN Stack)** at **
 | **Bansari Akhani** | `202512032` | **Module 1:** Project & Workspace Management, Core Auth, Design System | **Completed** |
 | **Heer Sachdev** | `202512117` | **Module 2:** Task & Workflow Management | *In Progress* |
 | **Ishpreet Kaur** | `202512104` | **Module 3:** Collaboration & Activity Tracking | *In Progress* |
-| **Kriti Patel** | `202512018` | **Module 4:** Dashboard, Analytics & Notifications | *In Progress* |
+| **Kriti Patel** | `202512018` | **Module 4:** Dashboard, Analytics & Notifications | **Completed** |
 
 ---
 
@@ -78,10 +78,12 @@ TeamFlow uses a decoupled client-server architecture engineered for scalability,
 - User mentions (`@username`) and live collaboration notifications.
 - Granular team event stream and unified activity timeline.
 
-### Module 4: Dashboard, Analytics & Notifications *(Team Placeholder)*
-- Executive analytics dashboard displaying project velocity, completion rates, and team bandwidth.
-- Visual charts and capacity planning meters.
-- Multi-channel notification center (in-app toasts, unread activity badges, and transactional email alerts).
+### Module 4: Dashboard, Analytics & Notifications *(Completed)*
+- **Executive Analytics Dashboard:** Real-time KPI summary cards displaying Total Tasks, Completion Rate (%), Active Contributors, and Team Velocity (tasks completed / active period).
+- **Workload & Bandwidth Allocation:** Interactive workload capacity progress meters per team member, identifying balanced vs heavy loads and unassigned backlog tasks.
+- **Task Status Distribution & Overdue Tracking:** Multi-stage task distribution bar meter and dedicated overdue tracking table calculating exact days overdue with one-click direct email reminder triggers.
+- **Export CSV Reporting:** Dynamic CSV export engine generating instant `<workspace>_tasks_report.csv` reports for offline auditing and stakeholder reporting.
+- **Transactional Notification Service:** Automated task assignment alerts and manual reminder notifications powered by Resend transactional email API with full audit history logging (`Notification` model).
 
 ---
 
@@ -244,8 +246,10 @@ teamflow/
 │   ├── config/
 │   │   └── db.js                  # MongoDB Atlas connection with DNS fallback
 │   ├── controllers/
+│   │   ├── analyticsController.js # Analytics KPIs, workload, CSV export & reminders
 │   │   ├── authController.js      # Register, Login, GetMe controllers
 │   │   ├── projectController.js   # Project CRUD & Member management
+│   │   ├── taskController.js      # Task creation, updates & assignment emails
 │   │   └── userController.js      # User directory search
 │   ├── middleware/
 │   │   ├── errorHandler.js        # Global error and 404 handlers
@@ -255,12 +259,20 @@ teamflow/
 │   │   └── validate.js            # Zod request validation middleware
 │   ├── models/
 │   │   ├── Activity.js            # Real-time workspace audit activity model
+│   │   ├── Notification.js        # Email audit trail and reminder log
 │   │   ├── Project.js             # Project schema with members and status
+│   │   ├── Task.js                # Task workflow model with status & priority
 │   │   └── User.js                # User schema with Bcrypt password hashing
 │   ├── routes/
+│   │   ├── analyticsRoutes.js     # Analytics, workload, CSV & reminder endpoints
 │   │   ├── authRoutes.js          # Authentication routing table
+│   │   ├── dashboardRoutes.js     # Personal cross-project dashboard routes
 │   │   ├── projectRoutes.js       # Workspaces routing table
 │   │   └── userRoutes.js          # Users lookup routing table
+│   ├── services/
+│   │   └── emailService.js        # Resend transactional email integration
+│   ├── tests/
+│   │   └── postman/               # Automated Postman collection test suite
 │   ├── utils/
 │   │   ├── asyncHandler.js        # Async error wrapper
 │   │   └── validators.js          # Zod schema definitions
@@ -276,16 +288,19 @@ teamflow/
     │   ├── components/
     │   │   ├── AuthHeroIllustration.jsx # Clean photography split-hero component
     │   │   ├── BrandLogo.jsx      # 3D Isometric Logo B SVG
+    │   │   ├── EmptyState.jsx     # Reusable pastel empty-state widget
     │   │   ├── Logo.jsx           # Unified brand mark export
     │   │   ├── Modal.jsx          # Accessible dialog modal
     │   │   └── Navbar.jsx         # Executive top navigation with profile menu
     │   ├── context/
     │   │   └── AuthContext.jsx    # React Auth Provider & token management
     │   ├── pages/
-    │   │   ├── LoginPage.jsx      # Executive split-hero login screen
-    │   │   ├── RegisterPage.jsx   # Executive split-hero register screen
-    │   │   ├── ProjectsPage.jsx   # Workspace directory & creation dialog
-    │   │   └── ProjectDetailsPage.jsx # Project overview, members & activity
+    │   │   ├── AnalyticsDashboardPage.jsx # Analytics KPIs, workload & overdue dashboard
+    │   │   ├── KanbanBoardPage.jsx        # Interactive task workflow board
+    │   │   ├── LoginPage.jsx              # Executive split-hero login screen
+    │   │   ├── RegisterPage.jsx           # Executive split-hero register screen
+    │   │   ├── ProjectsPage.jsx           # Workspace directory & creation dialog
+    │   │   └── ProjectDetailsPage.jsx     # Project overview, members & activity
     │   ├── App.jsx                # Router configuration & protected routes
     │   ├── index.css              # Tailwind CSS v4 design tokens
     │   └── main.jsx               # React DOM entry point
