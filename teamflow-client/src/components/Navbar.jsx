@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from './BrandLogo';
-import { FolderGit2, Kanban, LogOut, User as UserIcon } from 'lucide-react';
+import { FolderGit2, Kanban, BarChart3, LogOut, User as UserIcon } from 'lucide-react';
 
 export const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
@@ -51,6 +51,18 @@ export const Navbar = () => {
               >
                 <Kanban className="w-4 h-4 text-[#4E8765]" />
                 Kanban Board
+              </Link>
+
+              <Link
+                to="/dashboard"
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-sm font-medium transition ${
+                  isActive('/dashboard') || isActive('/analytics')
+                    ? 'bg-[#E8F2EC] text-[#2D5A40] font-semibold'
+                    : 'text-stone-600 hover:text-[#1F2937] hover:bg-stone-100'
+                }`}
+              >
+                <BarChart3 className="w-4 h-4 text-[#4E8765]" />
+                Analytics
               </Link>
             </div>
           </div>

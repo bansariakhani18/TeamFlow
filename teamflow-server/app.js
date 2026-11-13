@@ -8,6 +8,8 @@ import userRoutes from './routes/userRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
+import analyticsRoutes from './routes/analyticsRoutes.js';
 
 const app = express();
 
@@ -48,8 +50,10 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/projects', analyticsRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Central error handling
 app.use(notFound);

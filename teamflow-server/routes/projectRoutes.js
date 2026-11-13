@@ -15,6 +15,7 @@ import {
 import {
   getProjectActivity,
 } from '../controllers/activityController.js';
+import analyticsRoutes from './analyticsRoutes.js';
 import { protect } from '../middleware/protect.js';
 import { checkProjectMember, checkProjectOwner } from '../middleware/projectAccess.js';
 import { validate } from '../middleware/validate.js';
@@ -58,5 +59,8 @@ router
 router
   .route('/:projectId/activity')
   .get(checkProjectMember, getProjectActivity);
+
+// Module 4: Analytics, Dashboard & Notification routes
+router.use('/', analyticsRoutes);
 
 export default router;

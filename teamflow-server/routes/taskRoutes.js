@@ -17,6 +17,9 @@ import {
 import {
   getTaskActivity,
 } from '../controllers/activityController.js';
+import {
+  sendTaskReminder,
+} from '../controllers/analyticsController.js';
 
 const router = express.Router();
 
@@ -43,5 +46,7 @@ router
 
 router.patch('/:id/status', updateTaskStatus);
 router.patch('/:id/assignee', updateTaskAssignee);
+router.post('/:id/remind', sendTaskReminder);
+router.post('/:taskId/remind', sendTaskReminder);
 
 export default router;
