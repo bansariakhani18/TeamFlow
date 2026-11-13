@@ -1,4 +1,4 @@
-﻿import express from 'express';
+import express from 'express';
 import { protect } from '../middleware/protect.js';
 import { loadTaskAndProject } from '../middleware/taskAccess.js';
 import { validate } from '../middleware/validate.js';
