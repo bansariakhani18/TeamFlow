@@ -917,7 +917,8 @@ export const AnalyticsDashboardPage = () => {
                                 </td>
                                 <td className="py-2.5 px-3">
                                   <span
-                                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                                    title={n.error || (n.status === 'sent' ? `Delivered (ID: ${n.providerMessageId || 'OK'})` : 'Dispatch attempted')}
+                                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold cursor-help ${
                                       n.status === 'sent'
                                         ? 'bg-[#E8F2EC] text-[#2D5A40]'
                                         : 'bg-[#FFE5D9] text-[#D97767]'
